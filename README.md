@@ -55,11 +55,13 @@ Where:
 For each goal in the map
      Find matrix contains minimum distance from each goal to every position in the map
 
+visited_states <- new set
 Insert make_node(initial state, depth=0) into fringe
 While true
      If fringe is empty, then return failure
      current_node <- remove_front(fringe)
      If isGoal(current_node) then return current_node
+     Add current_state into visited_states
      For each operation in [UP, DOWN, LEFT, RIGHT]
           If player can perform the operation
                Calculate new player position
@@ -81,12 +83,13 @@ In each node, if the box is pushed to the edge and there is no goal at the edge 
 For each goal in the map
      Find matrix contains minimum distance from each goal to every position in the map
 Find deadlock space
-
+visited_states <- new set
 Insert make_node(initial state, depth=0) into fringe
 While true
      If fringe is empty, then return failure
      current_node <- remove_front(fringe)
      If isGoal(current_node) then return current_node
+     Add current_state into visited_states
      For each operation in [UP, DOWN, LEFT, RIGHT]
           If player can perform the operation
                Calculate new player position
