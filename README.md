@@ -64,6 +64,33 @@ While true
           If player can perform the operation
                Calculate new player position
                Calculate new box position if player push the box
-               Insert make_node(new state, depth=current_node.depth+1) into fringe
-               
+               Insert make_node(new state, depth=current_node.depth+1) into fringe         
+```
+
+## Optimization: Backtracking
+
+When the puzzle is more difficult, the time used is significantly increased. Therefore, we can reduce unnecessary nodes to reduce time and space usage by using backtracking.
+
+In each node, if the box is pushed to the edge and there is no goal at the edge of the map, there will be no way to push that box to the goal. Therefore, we will find the space that boxes should not be in this area, we call this **Deadlock**. If the box is in the deadlock space, we will prune the branch.
+
+![deadlock](https://github.com/user-attachments/assets/88d00655-b3ad-4d0d-a8a6-d66b019bffb0)
+
+### Pseudocode After Optimizing
+
+```
+For each goal in the map
+     Find matrix contains minimum distance from each goal to every position in the map
+Find deadlock space
+
+Insert make_node(initial state, depth=0) into fringe
+While true
+     If fringe is empty, then return failure
+     current_node <- remove_front(fringe)
+     If isGoal(current_node) then return current_node
+     For each operation in [UP, DOWN, LEFT, RIGHT]
+          If player can perform the operation
+               Calculate new player position
+               Calculate new box position if player push the box
+               If new box position is not in deadlock space
+                    Insert make_node(new state, depth=current_node.depth+1) into fringe
 ```
